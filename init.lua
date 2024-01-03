@@ -125,14 +125,40 @@ local plugins = {
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.5',
     dependencies = { 'nvim-lua/plenary.nvim' }
+  },
+  {
+    "williamboman/mason.nvim"
+  },
+  {
+    "williamboman/mason-lspconfig.nvim"
+  },
+  {
+    "neovim/nvim-lspconfig"
   }
 }
 
 local opts = {}
 vim.g.mapleader = " "
 
+-- lazy
 require("lazy").setup(plugins, opts)
+
+-- lualine
 require("lualine").setup()
+
+-- mason
+require("mason").setup()
+require("mason-lspconfig").setup {
+  ensure_installed = { "tsserver", "java_language_server", "rust_analyzer" },
+  automatic_installation = false,
+  handlers = nil,
+}
+
+-- lspconfig
+local lspconfig = require("lspconfig")
+lspconfig.tsserver.setup {}
+lspconfig.java_language_server.setup {}
+lspconfig.rust_analyzer.setup {}
 
 -- colorscheme
 vim.cmd.colorscheme "catppuccin-mocha"
@@ -156,4 +182,6 @@ opt.number = true
 
 -- user-commands
 vim.cmd "com Config :edit ~/.config/nvim/init.lua"
+
+-- keymaps
 vim.keymap.set('t', "<Esc>", "<C-\\><C-n>", {})
