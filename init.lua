@@ -153,3 +153,6 @@ opt.shiftround = true
 opt.tabstop = 2
 
 opt.number = true
+
+-- user-commands
+vim.cmd "com Config :edit ~/.config/nvim/init.lua"
