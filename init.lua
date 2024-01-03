@@ -156,3 +156,4 @@ opt.number = true
 
 -- user-commands
 vim.cmd "com Config :edit ~/.config/nvim/init.lua"
+vim.keymap.set('t', "<Esc>", "<C-\\><C-n>", {})
