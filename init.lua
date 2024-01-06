@@ -12,7 +12,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  { 
+    "catppuccin/nvim", 
+    name = "catppuccin", 
+    priority = 1000 
+  },
   {
     "nvim-treesitter/nvim-treesitter", 
     build = ":TSUpdate",
@@ -134,6 +138,23 @@ local plugins = {
   },
   {
     "neovim/nvim-lspconfig"
+  },
+  {
+    "hrsh7th/vim-vsnip"
+  }, 
+  {
+    "hrsh7th/vim-vsnip-integ"
+  },
+  { 
+    "rafamadriz/friendly-snippets" 
+  },
+  {
+    "L3MON4D3/LuaSnip",
+    -- follow latest release.
+    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+    -- install jsregexp (optional!).
+    build = "make install_jsregexp",
+    dependencies = { "rafamadriz/friendly-snippets" },
   }
 }
 
@@ -149,7 +170,7 @@ require("lualine").setup()
 -- mason
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "tsserver", "java_language_server", "rust_analyzer" },
+  ensure_installed = { "tsserver", "java_language_server", "rust_analyzer", "html" },
   automatic_installation = false,
   handlers = nil,
 }
@@ -159,16 +180,36 @@ local lspconfig = require("lspconfig")
 lspconfig.tsserver.setup {}
 lspconfig.java_language_server.setup {}
 lspconfig.rust_analyzer.setup {}
+--Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+lspconfig.html.setup {
+  capabilities = capabilities,
+}
 
 -- colorscheme
 vim.cmd.colorscheme "catppuccin-mocha"
 
 -- telescope
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader><leader>', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+-- LuaSnip
+require("luasnip.loaders.from_vscode").lazy_load();
+local ls = require("luasnip")
+vim.keymap.set({"i"}, "<Tab>", function() ls.expand() end, {silent = true})
+vim.keymap.set({"i", "s"}, "<Tab>", function() ls.jump( 1) end, {silent = true})
+vim.keymap.set({"i", "s"}, "<S-Tab>", function() ls.jump(-1) end, {silent = true})
+
+vim.keymap.set({"i", "s"}, "<C-E>", function()
+	if ls.choice_active() then
+		ls.change_choice(1)
+	end
+end, {silent = true})
 
 -- options
 local opt = vim.opt
