@@ -245,3 +245,4 @@ vim.cmd "com Config :edit ~/.config/nvim/init.lua"
 
 -- keymaps
 vim.keymap.set('t', "<Esc>", "<C-\\><C-n>", {})
+vim.keymap.set('n', '<leader>w', '<C-W>w', {})
