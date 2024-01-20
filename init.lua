@@ -564,6 +564,9 @@ end, {})
 vim.keymap.set('n', '<leader>e', function() vim.cmd(':Neotree reveal float') end, {})
 vim.keymap.set('n', '<leader>/', function() vim.cmd(':Neotree toggle left') end, {})
 
+-- neogit
+vim.keymap.set('n', '<leader>v', ':Neogit<cr>', { silent = true })
+
 -- options
 local opt = vim.opt
 
