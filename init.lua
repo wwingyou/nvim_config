@@ -20,15 +20,24 @@ local plugins = {
   {
     "nvim-treesitter/nvim-treesitter", 
     build = ":TSUpdate",
+    dependencies = {
+      'windwp/nvim-ts-autotag'
+    },
     config = function () 
       local configs = require("nvim-treesitter.configs")
 
       configs.setup({
-          ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "java", "python", "javascript", "html", "css" },
-          sync_install = false,
-          highlight = { enable = true },
-          indent = { enable = true },  
-        })
+        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "java", "python", "javascript", "html", "css" },
+        sync_install = false,
+        highlight = { enable = true },
+        indent = { enable = true },  
+        autotag = { 
+          enable = true,
+          enable_rename = true,
+          enable_close = true,
+          enable_close_on_slash = true,
+        },
+      })
     end
   }, 
   {
@@ -548,17 +557,43 @@ require('nvim-terminal').setup();
 terminal = require('nvim-terminal').DefaultTerminal
 prev_window = vim.api.nvim_get_current_win();
 terminal_window = NTGlobal.window
+local terminal_index = 0
 
 -- switch terminal and get into terminal mode immediately
+local function to_terminal_window(index)
+  if is_terminal_window() == false then
+    prev_window = vim.api.nvim_get_current_win();
+  end
+  local command = ''
+  if terminal_window:is_valid() then
+    if terminal_index ~= index then 
+      command = ':lua terminal:open('..index..')<cr>:lua terminal_window:focus()<cr>a'
+    else 
+      command = ':lua terminal_window:focus()<cr>a'
+    end
+  else 
+    command = ':lua terminal:open('..index..')<cr>a'
+  end
+  terminal_index = index
+  return command
+end
+
 vim.keymap.set('n', '<leader>t', function() 
   if is_terminal_window() == false then
     prev_window = vim.api.nvim_get_current_win();
   end
-  return terminal_window:is_valid() and ':lua terminal_window:focus()<cr>a' or ':lua terminal:open()<cr>a'
+  return terminal_window:is_valid() and ':lua terminal:toggle()<cr>' or ':lua terminal:toggle()<cr>a'
 end, { silent = true, expr = true })
+
 vim.keymap.set('t', "<Esc>", function()
   vim.api.nvim_set_current_win(prev_window)
-end, {})
+end, { silent = true })
+
+vim.keymap.set('n', '<leader>1', function() return to_terminal_window(1) end, { silent = true, expr = true })
+vim.keymap.set('n', '<leader>2', function() return to_terminal_window(2) end, { silent = true, expr = true })
+vim.keymap.set('n', '<leader>3', function() return to_terminal_window(3) end, { silent = true, expr = true })
+vim.keymap.set('n', '<leader>4', function() return to_terminal_window(4) end, { silent = true, expr = true })
+vim.keymap.set('n', '<leader>5', function() return to_terminal_window(5) end, { silent = true, expr = true })
 
 -- neo-tree
 vim.keymap.set('n', '<leader>e', function() vim.cmd(':Neotree reveal float') end, {})
