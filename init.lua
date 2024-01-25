@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -490,6 +491,42 @@ local plugins = {
 
       vim.cmd([[nnoremap \ :Neotree reveal<cr>]])
     end
+  },
+  {
+    'rcarriga/nvim-notify',
+    opts = {
+      stages = 'slide',
+      render = 'minimal',
+      timeout = 3000
+    }
+  },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- add any options here
+    },
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    }
+  },
+  {
+    'echasnovski/mini.bufremove', 
+    version = false,
+  },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
   }
 }
 
@@ -601,6 +638,27 @@ vim.keymap.set('n', '<leader>/', function() vim.cmd(':Neotree toggle left') end,
 
 -- neogit
 vim.keymap.set('n', '<leader>v', ':Neogit<cr>', { silent = true })
+
+-- nvim-notify
+vim.opt.termguicolors = true;
+vim.notify = require('notify')
+
+-- mini.bufremove
+require'mini.bufremove'.setup()
+vim.keymap.set('n', '<leader>q', function()
+  local bd = require('mini.bufremove').delete
+  if vim.bo.modified then
+    local choice = vim.fin.confirm(("변경 사항을 저장하시겠습니까? (%q)"):format(vim.fn.bufname()), "&저장\n&저장안함\n&취소")
+    if choice == 1 then
+      vim.cmd.write()
+      bd(0)
+    elseif choice == 2 then
+      bd(0, true)
+    end
+  else
+    bd(0)
+  end
+end, { desc = "Delete Buffer" })
 
 -- options
 local opt = vim.opt
