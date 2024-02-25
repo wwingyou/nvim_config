@@ -27,10 +27,6 @@ return {
     },
   },
   config = function ()
-    -- custom keymap
-    vim.keymap.set('n', '<leader>e', function() vim.cmd(':Neotree reveal float') end, {})
-    vim.keymap.set('n', '<leader>/', function() vim.cmd(':Neotree toggle left') end, {})
-
     -- If you want icons for diagnostic errors, you'll need to define them somewhere:
     vim.fn.sign_define("DiagnosticSignError",
       {text = " ", texthl = "DiagnosticSignError"})

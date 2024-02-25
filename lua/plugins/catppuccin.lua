@@ -5,15 +5,15 @@ return {
   priority = 1000,
   config = function() 
     require("catppuccin").setup {
-      integrations = {
-        neotree = true,
-        notify = true,
-      },
       custom_highlights = function(colors)
         return {
           WinSeparator = { fg = colors.overlay0 },
         }
-      end
+      end,
+      integrations = {
+        treesitter = true,
+        notify = true,
+      }
     }
     vim.cmd.colorscheme "catppuccin-mocha"
   end

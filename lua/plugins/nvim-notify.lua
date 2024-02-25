@@ -2,11 +2,13 @@ return {
   'rcarriga/nvim-notify',
   opts = {
     stages = 'slide',
-    render = 'minimal',
+    render = 'compact',
     timeout = 3000
   },
-  config = function()
+  config = function(_, opts)
     vim.opt.termguicolors = true
-    vim.notify = require('notify')
+    local notify = require("notify")
+    notify.setup(opts)
+    vim.notify = notify
   end
 }
