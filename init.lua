@@ -13,10 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " "
 
-require("lazy").setup("plugins")
-
--- colorscheme
-vim.cmd.colorscheme "catppuccin-mocha"
+require("lazy").setup("plugins", {})
 
 -- options
 local opt = vim.opt
