@@ -43,8 +43,8 @@ return {
         { name = "luasnip" },
         { name = "path" },
       }, {
-          { name = "buffer" },
-        }),
+        { name = "buffer" },
+      }),
       experimental = {
         ghost_text = {
           hl_group = "CmpGhostText",

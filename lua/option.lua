@@ -6,7 +6,10 @@ opt.shiftround = true
 opt.tabstop = 2
 
 opt.number = true
+opt.relativenumber = true
 opt.clipboard = 'unnamedplus'
+opt.ignorecase = true
+opt.smartcase = true
 
 -- clipboard setting
 vim.cmd('set clipboard+=unnamedplus')

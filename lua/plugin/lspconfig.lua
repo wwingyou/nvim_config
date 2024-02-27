@@ -3,7 +3,6 @@ return {
   config = function() 
     local lspconfig = require("lspconfig")
     lspconfig.tsserver.setup {}
-    lspconfig.java_language_server.setup {}
     lspconfig.rust_analyzer.setup {}
     lspconfig.ruby_ls.setup {}
     --Enable (broadcasting) snippet capability for completion
