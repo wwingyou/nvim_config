@@ -1,8 +1,8 @@
 -- align file when writeing
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  command = ":normal gg=G"
-})
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   pattern = "*",
+--   command = ":normal gg=G"
+-- })
 
 -- nowrap on html file to reserve it's structure
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
