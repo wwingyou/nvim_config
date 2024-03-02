@@ -34,4 +34,17 @@ vim.keymap.set('n', '<leader>b', builtin.buffers, {})
 vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
 
 -- lsp
-vim.keymap.set('n', '<leader>a', function() vim.lsp.buf.code_action() end, {})
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client.server_capabilities.hoverProvider then
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = args.buf })
+    end
+    if client.server_capabilities.implementationProvider then
+      vim.keymap.set('n', '<leader>i', vim.lsp.buf.implementation, { buffer = args.buf })
+    end
+    if client.server_capabilities.codeActionProvider then
+      vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, { buffer = args.buf })
+    end
+  end,
+})

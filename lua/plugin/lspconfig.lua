@@ -15,7 +15,7 @@ return {
     lspconfig.cssls.setup {
       capabilities = capabilities,
     }
-    require'lspconfig'.lua_ls.setup {
+    lspconfig.lua_ls.setup {
       on_init = function(client)
         local path = client.workspace_folders[1].name
         if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
@@ -30,7 +30,9 @@ return {
               workspace = {
                 checkThirdParty = false,
                 library = {
-                  vim.env.VIMRUNTIME
+                  -- vim.env.VIMRUNTIME,
+                  -- vim.env.VIMRUNTIME.."/lua",
+                  vim.env.VIMRUNTIME.."/lua/vim",
                   -- Depending on the usage, you might want to add additional paths here.
                   -- E.g.: For using `vim.*` functions, add vim.env.VIMRUNTIME/lua.
                   -- "${3rd}/luv/library"
