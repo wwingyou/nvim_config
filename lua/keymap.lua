@@ -1,5 +1,5 @@
 -- switch window
-vim.keymap.set('n', '<leader>w', '<C-W>w', {})
+vim.keymap.set('n', '\\', '<C-W>w', {})
 
 -- noice
 vim.keymap.set('n', '<leader>n', ':Noice telescope<cr>', {})
