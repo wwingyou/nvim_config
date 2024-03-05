@@ -6,9 +6,15 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     opts = {
-        ensure_installed = { "tsserver", "jdtls", "rust_analyzer", "html", "cssls" },
-        automatic_installation = false,
-        handlers = nil,
+      ensure_installed = {
+        "tsserver",
+        "jdtls",
+        "rust_analyzer",
+        "html",
+        "cssls"
+      },
+      automatic_installation = false,
+      handlers = nil,
     },
     config = true,
   }
