@@ -1,10 +1,10 @@
 return {
   "neovim/nvim-lspconfig",
-  config = function() 
+  config = function()
     local lspconfig = require("lspconfig")
     lspconfig.tsserver.setup {}
     lspconfig.rust_analyzer.setup {}
-    lspconfig.ruby_ls.setup {}
+    lspconfig.solargraph.setup {}
     --Enable (broadcasting) snippet capability for completion
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -18,7 +18,7 @@ return {
     lspconfig.lua_ls.setup {
       on_init = function(client)
         local path = client.workspace_folders[1].name
-        if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
+        if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
           client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
             Lua = {
               runtime = {
@@ -32,7 +32,7 @@ return {
                 library = {
                   -- vim.env.VIMRUNTIME,
                   -- vim.env.VIMRUNTIME.."/lua",
-                  vim.env.VIMRUNTIME.."/lua/vim",
+                  vim.env.VIMRUNTIME .. "/lua/vim",
                   -- Depending on the usage, you might want to add additional paths here.
                   -- E.g.: For using `vim.*` functions, add vim.env.VIMRUNTIME/lua.
                   -- "${3rd}/luv/library"
@@ -49,4 +49,3 @@ return {
     }
   end
 }
-
