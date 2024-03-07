@@ -11,7 +11,8 @@ return {
         "jdtls",
         "rust_analyzer",
         "html",
-        "cssls"
+        "cssls",
+        "clangd"
       },
       automatic_installation = false,
       handlers = nil,

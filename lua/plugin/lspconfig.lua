@@ -5,6 +5,7 @@ return {
     lspconfig.tsserver.setup {}
     lspconfig.rust_analyzer.setup {}
     lspconfig.solargraph.setup {}
+    lspconfig.clangd.setup {}
     --Enable (broadcasting) snippet capability for completion
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
